@@ -1,4 +1,4 @@
-package com.mikedg.android.gtaglassserver;
+package com.mikedg.android.glass.reflecty.server;
 
 import android.util.Log;
 

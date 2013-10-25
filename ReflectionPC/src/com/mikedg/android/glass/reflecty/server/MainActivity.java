@@ -1,4 +1,4 @@
-package com.mikedg.android.gtaglassserver;
+package com.mikedg.android.glass.reflecty.server;
 
 import java.io.IOException;
 
@@ -12,8 +12,8 @@ import android.text.format.Formatter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mikedg.java.glass.gtaglassclient.GtaServer;
-import com.mikedg.java.glass.gtaglassclient.ImageByteHandler;
+import com.mikedg.java.reflecty.GtaServer;
+import com.mikedg.java.reflecty.ImageByteHandler;
 
 public class MainActivity extends Activity {
 

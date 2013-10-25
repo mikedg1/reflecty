@@ -1,4 +1,4 @@
-package com.mikedg.java.glass.gtaglassclient;
+package com.mikedg.java.reflecty;
 
 import java.awt.image.BufferedImage;
 
