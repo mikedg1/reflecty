@@ -2,9 +2,6 @@ package com.mikedg.android.gtaglassserver;
 
 import java.io.IOException;
 
-import com.mikedg.java.glass.gtaglassclient.GtaServer;
-import com.mikedg.java.glass.gtaglassclient.ImageByteHandler;
-
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,6 +11,9 @@ import android.os.Bundle;
 import android.text.format.Formatter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.mikedg.java.glass.gtaglassclient.GtaServer;
+import com.mikedg.java.glass.gtaglassclient.ImageByteHandler;
 
 public class MainActivity extends Activity {
 
@@ -36,7 +36,7 @@ public class MainActivity extends Activity {
 		WifiManager wifiMgr = (WifiManager) getSystemService(WIFI_SERVICE);
 		WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
 		int ip = wifiInfo.getIpAddress();
-		String ipAddress = Formatter.formatIpAddress(ip);
+		String ipAddress = Formatter.formatIpAddress(ip); //FIXME: this is deprecated
 		mIpAddressTextView.setText(ipAddress);
 	}
 
@@ -45,16 +45,15 @@ public class MainActivity extends Activity {
 		mServer.setupServer();
 	}
 
+	//FIXME: on pause, tear down the server
+	
 	private class DisplayImageByteHandler implements ImageByteHandler {
 		@Override
 		public void doSomethingWithImageBytes(final byte[] buffer) throws IOException {
-			//FIXME: is the data coming in correct?
-			//Maybe I'm not pulling in the full data? so thats why these get butchered? maybe lots of 0's at the end?
 			runOnUiThread(new Runnable() {
 				private Bitmap oldBm = null;
-
 				public void run() {
-					//FIXME: getting out of memory errors still
+					L.d("do something with bitmap");
 					if (oldBm != null) {
 						oldBm.recycle();
 					}
@@ -65,6 +64,5 @@ public class MainActivity extends Activity {
 				}
 			});
 		}
-		
 	}
 }
