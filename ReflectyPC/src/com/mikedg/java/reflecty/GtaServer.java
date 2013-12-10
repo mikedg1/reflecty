@@ -11,24 +11,25 @@ public class GtaServer {
 	public static final int PORT = 6666;
 	private Thread mServerThread;
 	private ImageByteHandler mHandler;
-
+	private ServerSocket mServerSocket;
+	private Socket mConnection;
+	
 	public GtaServer(ImageByteHandler handler) {
 		mHandler = handler;
 	}
 
 	public void setupServer() {
 		Runnable server = new Runnable() {
-
 			@Override
 			public void run() {
-				ServerSocket serverSocket = null;
+				mServerSocket = null;
 				while (true) { // FIXME: should have a way out thats not killing
 								// the app
 					try {
-						serverSocket = new ServerSocket(PORT);
-						Socket connection = serverSocket.accept();
+						mServerSocket = new ServerSocket(PORT);
+						mConnection = mServerSocket.accept();
 
-						InputStream is = connection.getInputStream();
+						InputStream is = mConnection.getInputStream();
 						DataInputStream ds = new DataInputStream(
 								new BufferedInputStream(is));
 						while (is.available() > -1) {
@@ -75,9 +76,9 @@ public class GtaServer {
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-						if (serverSocket != null) {
+						if (mServerSocket != null) {
 							try {
-								serverSocket.close();
+								mServerSocket.close();
 							} catch (IOException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -92,4 +93,13 @@ public class GtaServer {
 		mServerThread.start();
 	}
 
+	public void stop() {
+		try {
+			mServerSocket.close();
+			mConnection.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

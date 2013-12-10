@@ -47,6 +47,15 @@ public class MainActivity extends Activity {
 
 	//FIXME: on pause, tear down the server
 	
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		
+		mServer.stop();
+		//FIXME: don't have time to debug this, so
+		System.exit(0);
+	}
+
 	private class DisplayImageByteHandler implements ImageByteHandler {
 		@Override
 		public void doSomethingWithImageBytes(final byte[] buffer) throws IOException {
